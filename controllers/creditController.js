@@ -35,13 +35,13 @@ const addCredit = async (req, res, next) => {
     try {
         const { userId } = req.params;
         const { amount } = req.body;
-
+        const balance = parseFloat(amount);
         // Validate input
-        if (!amount || amount <= 0) {
+        if (!balance || balance <= 0) {
             throw new ApiError("Invalid amount", 400);
         }
 
-        const credit = await addCreditService({ userId: parseInt(userId), amount });
+        const credit = await addCreditService({ userId: parseInt(userId), amount: balance });
 
         res.status(200).json({ message: "Credit added successfully", credit });
     } catch (err) {

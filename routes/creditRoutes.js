@@ -8,7 +8,7 @@ import {
     , getTransactions
     , getCreditById
 } from "../controllers/creditController.js";
-import verifyToken from "../middlewares/jwtMiddleware.js";
+import { verifyToken } from "../middlewares/jwtMiddleware.js";
 import authorizeRole from "../middlewares/roleMiddleware.js";
 
 const router = express.Router();
@@ -16,9 +16,10 @@ const router = express.Router();
 //  Get credit info for a specific user 
 router.route('/user/:userId').get(verifyToken, authorizeRole(["admin", "user"]), getCreditByUser);
 //  Add credit to a user’s account 
-router.route('/user/:userId/add').post(verifyToken, authorizeRole(["admin"]), addCredit);
+router.route('/user/:userId/add').post(verifyToken, authorizeRole(["service"]), addCredit);
 //  Deduct credit from a user’s account 
-router.route('/user/:userId/deduct').post(verifyToken, authorizeRole(["admin"]), deductCredit);
+//TODO REMOVE USER ROLE ONCE STRIPE ADDED
+router.route('/user/:userId/deduct').post(verifyToken, authorizeRole(["admin", "user"]), deductCredit);
 
 //  Get all credit transactions for a user 
 router.route('/transactions/user/:userId').get(verifyToken, authorizeRole(["admin", "user"]), getTransactionsByUser);

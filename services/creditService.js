@@ -38,9 +38,10 @@ const addCreditService = async ({ userId, amount }) => {
     }
 
     // Update balance if credit account exists
+    const newBalance = credit.balance + amount;
     const updatedCredit = await prisma.credit.update({
         where: { userId },
-        data: { balance: credit.balance + amount },
+        data: { balance: newBalance },
     });
 
     // Create transaction record

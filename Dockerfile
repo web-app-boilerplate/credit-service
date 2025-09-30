@@ -12,4 +12,6 @@ RUN npx prisma generate
 
 EXPOSE 5003
 
+RUN npm run swagger:generate
+
 CMD npx prisma migrate deploy && npm start
